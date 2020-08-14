@@ -1,15 +1,10 @@
-import React from 'react';
+    <header>
+        <h1>Кошелек</h1>
+        <h2>Калькулятор расходов</h2>
+    </header>
 
-
-
-function App({headerName,mainSection}) {
-  return (
-    <React.Fragment>
-      <header>
-        <h1>{headerName}</h1>
-      </header>
-      <main>   {mainSection}  
-      <div className="container">
+    <main>
+        <div class="container">
             <section class="total">
                 <header class="total__header">
                     <h3>Баланс</h3>
@@ -50,24 +45,17 @@ function App({headerName,mainSection}) {
                 <h3>Новая операция</h3>
                 <form id="form">
                     <label>
-                        <input type="text" class="operation__fields operation__name" placeholder="Наименование операции"></input>
+                        <input type="text" class="operation__fields operation__name" placeholder="Наименование операции">
                     </label>
                     <label>
-                        <input type="number" class="operation__fields operation__amount" placeholder="Введите сумму"></input>
-                   
+                        <input type="number" class="operation__fields operation__amount" placeholder="Введите сумму">
                     </label>
                     <div class="operation__btns">
                         <button type="submit" class="operation__btn operation__btn-subtract">РАСХОД</button>
                         <button type="submit" class="operation__btn operation__btn-add">ДОХОД</button>
                     </div>
+
                 </form>
-
-               
             </section>
-        </div> 
-        </main>
-    </React.Fragment>
-  );
-}
-
-export default App;
+        </div>
+    </main>
