@@ -16,38 +16,59 @@ class App extends Component  {
       transactions:[],
       description:'',
       amount:'',
+      income:0,
+      expens:0,
     };
   }
 
+  // считаем доходы и расходы
+  countIncome= () =>{
+    
+    let incomeCount =0;    
+    let expensCount =0;
+    this.state.transactions.forEach(item =>{
+      if(item.add){
+         incomeCount+= +item.amount;
+        }else {
+          expensCount+= +item.amount;
+        }     
+    });
+    this.setState({income: incomeCount});
+    this.setState({expens: expensCount});
+
+  }
+
   // метод для занесения транзакцйи в стейт
-  addTransaction = add => {
+  addTransaction = add => {    
 
     const transactions = [...this.state.transactions];
-
     const transaction ={
       id : `cmr${(+new Date()).toString(16)}`,
       description : this.state.description,
       amount : this.state.amount,
       add : add,
     };
-    transactions.push(transaction);
+
+    if(this.state.amount &&this.state.description){
+       transactions.push(transaction);
+    }else{
+      alert('Заполните поля!');
+    }
     this.setState({
            transactions,
            description:'',
            amount:'',
-           });
-
-   
+           },() =>  this.countIncome());   
   }
 
+ 
+
   addAmount = event =>{
-    this.setState({amount: event.target.value}/*,() =>  console.log(this.state)*/)
-  
+    this.setState({amount: event.target.value}/*,() =>  console.log(this.state)*/)  
   }
   
   addDescription = event =>{
-    this.setState({description: event.target.value}/*,() =>  console.log(this.state)*/)
-  
+    this.setState({description: event.target.value},/*() =>  this.countIncome()*/)  
   }
 
   render(){
@@ -61,7 +82,10 @@ class App extends Component  {
         <main>   
         <div className="container">
         
-             <Total/>
+             <Total
+                  expens={this.state.expens}
+                  income={this.state.income}
+             />
              <History
                   transactions={this.state.transactions} />
              <Operation 
@@ -69,7 +93,7 @@ class App extends Component  {
                   addAmount={this.addAmount}        
                   addDescription={this.addDescription}      
                   description={this.state.description}
-                  amount={this.state.amount}      
+                  amount={this.state.amount}                 
             />          
   
           </div> 

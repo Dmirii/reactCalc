@@ -5,7 +5,8 @@ const Operation = ({
                     addDescription,
                     addAmount,
                     description,
-                    amount 
+                    amount,
+                    
                   }) => (
         
             <section className="operation">
@@ -13,6 +14,7 @@ const Operation = ({
             <form id="form">
                 <label>
                     <input 
+                        required="required"
                         onChange={addDescription}
                         value={description}
                         type="text" 
@@ -21,6 +23,8 @@ const Operation = ({
                 </label>
                 <label>
                     <input 
+                      
+                        required="required"
                         onChange={addAmount}
                         value={amount}
                         type="number" 
@@ -29,7 +33,9 @@ const Operation = ({
             
                 </label>
                 <div className="operation__btns">
-                    <button onClick={()=> addTransaction(false)}
+                    <button onClick={()=>  { 
+                            addTransaction(false);                            
+                            }}
                             type="button" 
                             className="operation__btn operation__btn-subtract">
                             РАСХОД</button>
