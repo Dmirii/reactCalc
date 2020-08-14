@@ -7,7 +7,7 @@ import './style.css';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App headerName='Кошелёк' mainSection="Главный раздел"/>
+    <App headerName='Кошелёк' mainSection="Калькулятор расходов"/>
   </React.StrictMode>,
   document.getElementById('root')
 );

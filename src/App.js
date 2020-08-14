@@ -1,73 +1,82 @@
-import React from 'react';
+import React, { Component } from 'react';
+import Total from './components/total/Total';
+import History from './components/history/History';
+import Operation from './components/operation/Operation';
 
 
 
-function App({headerName,mainSection}) {
-  return (
-    <React.Fragment>
-      <header>
-        <h1>{headerName}</h1>
-      </header>
-      <main>   {mainSection}  
-      <div className="container">
-            <section class="total">
-                <header class="total__header">
-                    <h3>Баланс</h3>
-                    <p class="total__balance">0 ₽</p>
-                </header>
-                <div class="total__main">
-                    <div class="total__main-item total__income">
-                        <h4>Доходы</h4>
-                        <p class="total__money total__money-income">
-                            +0 ₽
-                        </p>
-                    </div>
-                    <div class="total__main-item total__expenses">
-                        <h4>Расходы</h4>
-                        <p class="total__money total__money-expenses">
-                            -0 ₽
-                        </p>
-                    </div>
-                </div>
-            </section>
+class App extends Component  {
 
-            <section class="history">
-                <h3>История расходов</h3>
-                <ul class="history__list">
-                    <li class="history__item history__item-plus">Получил зарплату
-                        <span class="history__money">+30000 ₽</span>
-                        <button class="history__delete">x</button>
-                    </li>
+  constructor(props){
+    super(props);
+    this.headerName = props.headerName;
+    this.mainSection = props.mainSection;
 
-                    <li class="history__item  history__item-minus">Отдал долг
-                        <span class="history__money">-10000 ₽</span>
-                        <button class="history__delete">x</button>
-                    </li>
-                </ul>
-            </section>
+    this.state={
+      transactions:[],
+      description:'',
+      amount:'',
+    };
+  }
 
-            <section class="operation">
-                <h3>Новая операция</h3>
-                <form id="form">
-                    <label>
-                        <input type="text" class="operation__fields operation__name" placeholder="Наименование операции"></input>
-                    </label>
-                    <label>
-                        <input type="number" class="operation__fields operation__amount" placeholder="Введите сумму"></input>
-                   
-                    </label>
-                    <div class="operation__btns">
-                        <button type="submit" class="operation__btn operation__btn-subtract">РАСХОД</button>
-                        <button type="submit" class="operation__btn operation__btn-add">ДОХОД</button>
-                    </div>
-                </form>
+  // метод для занесения транзакцйи в стейт
+  addTransaction = add => {
 
-               
-            </section>
-        </div> 
-        </main>
-    </React.Fragment>
-  );
+    const transactions = [...this.state.transactions];
+
+    const transaction ={
+      id : `cmr${(+new Date()).toString(16)}`,
+      description : this.state.description,
+      amount : this.state.amount,
+      add : add,
+    };
+    transactions.push(transaction);
+    this.setState({
+           transactions,
+           description:'',
+           amount:'',
+           });
+
+   
+  }
+
+  addAmount = event =>{
+    this.setState({amount: event.target.value}/*,() =>  console.log(this.state)*/)
+  
+  }
+  
+  addDescription = event =>{
+    this.setState({description: event.target.value}/*,() =>  console.log(this.state)*/)
+  
+  }
+
+  render(){
+    
+    return ( 
+      <React.Fragment>
+        <header>
+          <h1>{this.headerName}</h1>
+          <h2>{this.mainSection}  </h2>
+        </header>
+        <main>   
+        <div className="container">
+        
+             <Total/>
+             <History
+                  transactions={this.state.transactions} />
+             <Operation 
+                  addTransaction={this.addTransaction}
+                  addAmount={this.addAmount}        
+                  addDescription={this.addDescription}      
+                  description={this.state.description}
+                  amount={this.state.amount}      
+            />          
+  
+          </div> 
+          </main>
+      </React.Fragment>
+    );
+  }
 }
 
 export default App;
